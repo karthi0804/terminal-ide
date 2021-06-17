@@ -1,6 +1,7 @@
-ARG baseimage=nvidia/cuda:10.2-devel-ubuntu18.04
+ARG baseimage=ubuntu:18.04
 FROM $baseimage
-ARG user=moovita-docker
+ARG user=karthi
+ARG pythonversion=python3.7
 ARG uid=1000
 
 # installing basic softwares with root privilege
@@ -17,9 +18,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	libxrender-dev\
 	net-tools \
 	openssh-client \
-	python3.7 \
+	$pythonversion \
 	python3-pip \
-	python3.7-dev \
+	$pythonversion-dev \
 	python3-setuptools \
 	software-properties-common \
 	sudo \
@@ -30,7 +31,7 @@ RUN add-apt-repository ppa:neovim-ppa/stable && \
 	rm -rf /var/lib/apt/lists/*
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && \ 
 	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8 && \
-	update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1 && \
+	update-alternatives --install /usr/bin/python python /usr/bin/$pythonversion 1 && \
 	python -m pip install pip==21.0.1
 ENV PATH="$PATH:/home/$user/.local/bin"
 
