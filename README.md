@@ -13,13 +13,13 @@ This project contains the code necessary to build the docker image of linux term
 
 1. Build & Run the required docker image by specifying any service like `terminal-ide-18-py3.7-service` mentioned in the docker-compose-file.
 ```commandline
-docker-compose up -d terminal-ide-18-py.3.7-service
+docker-compose up -d terminal-ide-18-py3.7-service
 ```
 Note: `-d` is needed to connect interactively to the container
 
 2. Attach to the running container 
 ```commandline
-docker attach terminal-ide-18-py.3.7-containerr
+docker attach terminal-ide-18-py3.7-containerr
 ```
 
 3. Run `. /ide_start.sh` to start the terminal based IDE (pre-defined tmux template).
