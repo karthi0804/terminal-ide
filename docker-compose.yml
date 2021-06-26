@@ -16,6 +16,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix  # sync host clipboard
     environment:
       - DISPLAY  # sync host clipboard
+      - TZ=Asia/Singapore  # set the desired time zone
     hostname: laptop-docker
     container_name: terminal-ide-18-py3.7-container
     stdin_open: true
@@ -37,6 +38,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix  # sync host clipboard
     environment:
       - DISPLAY  # sync host clipboard
+      - TZ=Asia/Singapore  # set the desired time zone
     hostname: laptop-docker
     container_name: terminal-ide-18-py3.6-container
     stdin_open: true
@@ -58,6 +60,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix  # sync host clipboard
     environment:
       - DISPLAY  # sync host clipboard
+      - TZ=Asia/Singapore  # set the desired time zone
     hostname: laptop-docker
     container_name: terminal-ide-18-py3.7-cuda10.2-container
     stdin_open: true

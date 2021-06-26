@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	sudo \
 	tmux \
 	zsh
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
 RUN add-apt-repository ppa:neovim-ppa/stable && \
 	apt-get install -y neovim && \
 	rm -rf /var/lib/apt/lists/*
