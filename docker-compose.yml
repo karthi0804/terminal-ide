@@ -44,15 +44,15 @@ services:
     stdin_open: true
     tty: true
     network_mode: "bridge"
-  terminal-ide-18-py3.7-cuda10.2-service:
-    image: terminal-ide:ubuntu18.04-py3.7-cuda10.2
+  terminal-ide-18-py3.8-cuda10.2-service:
+    image: terminal-ide:ubuntu18.04-py3.8-cuda10.2
     build:
       context: .
       dockerfile: Dockerfile
       args:
         - baseimage=nvidia/cuda:10.2-devel-ubuntu18.04 # baseimage  
-        - pythonversion=python3.7
-        - uid=1000  # uid of the host
+        - pythonversion=python3.8
+        - uid=1001  # uid of the host
         - user=${USER}
     ports:
       - 8899:8899  # jupyterlab
@@ -62,9 +62,31 @@ services:
       - DISPLAY  # sync host clipboard
       - TZ=Asia/Singapore  # set the desired time zone
     hostname: laptop-docker
-    container_name: terminal-ide-18-py3.7-cuda10.2-container
+    container_name: terminal-ide-18-py3.8-cuda10.2-container
     stdin_open: true
     tty: true
     runtime: "nvidia"
     network_mode: "bridge"
-
+  terminal-ide-18-py3.8-cuda11.1-service:
+    image: terminal-ide:ubuntu18.04-py3.8-cuda11.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - baseimage=nvidia/cuda:11.1-devel-ubuntu18.04 # baseimage  
+        - pythonversion=python3.8
+        - uid=1001  # uid of the host
+        - user=${USER}
+    ports:
+      - 8899:8899  # jupyterlab
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix  # sync host clipboard
+    environment:
+      - DISPLAY  # sync host clipboard
+      - TZ=Asia/Singapore  # set the desired time zone
+    hostname: laptop-docker
+    container_name: terminal-ide-18-py3.8-cuda11.1-container
+    stdin_open: true
+    tty: true
+    runtime: "nvidia"
+    network_mode: "bridge"
