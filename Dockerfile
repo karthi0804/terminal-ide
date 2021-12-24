@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	python3-pip \
 	$pythonversion-dev \
 	python3-setuptools \
+	silversearcher-ag \
 	software-properties-common \
 	sudo \
 	tmux \
