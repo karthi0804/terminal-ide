@@ -14,6 +14,7 @@ nmap ga <Plug>(EasyAlign)
 " On-demand loading
 Plug 'scrooloose/nerdtree'
 nnoremap <C-g> :NERDTreeToggle<CR>
+nnoremap <silent> <C-r> :Ag<CR>
 
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf.vim'
