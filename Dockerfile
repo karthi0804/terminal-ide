@@ -34,7 +34,8 @@ RUN add-apt-repository ppa:neovim-ppa/stable && \
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && \ 
 	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8 && \
 	update-alternatives --install /usr/bin/python python /usr/bin/$pythonversion 1 && \
-	python -m pip install pip==21.0.1
+	python -m pip install pip==21.0.1  && \
+	python -m pip install ipdb
 ENV PATH="$PATH:/home/$user/.local/bin"
 
 # add user
