@@ -69,10 +69,10 @@ nmap <C-l>      :tabnext<CR>
 nmap <C-k>      :tabprevious<CR>
 imap <C-l>      <Esc>:tabnext<CR>
 imap <C-k>      <Esc>:tabprevious<CR>
-nmap <C-S><Down> <C-W><C-J>
-nmap <C-S><Up> <C-W><C-K>
-nmap <C-S><Right> <C-W><C-L>
-nmap <C-S><Left> <C-W><C-H>
+nmap <C-S><C-J> <C-W><C-J>
+nmap <C-S><C-K> <C-W><C-K>
+nmap <C-S><C-L> <C-W><C-L>
+nmap <C-S><C-H> <C-W><C-H>
 imap <C-S><End> <C-W><C-J>
 imap <C-S><Home> <C-W><C-K>
 imap <C-S><Delete> <C-W><C-L>
