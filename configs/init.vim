@@ -65,10 +65,10 @@ set splitbelow
 set splitright
 inoremap <C-t>     <Esc>:tabnew<CR>
 nnoremap <C-t>     :tabnew<CR>
-nmap <C-l>      :tabnext<CR>
-nmap <C-k>      :tabprevious<CR>
-imap <C-l>      <Esc>:tabnext<CR>
-imap <C-k>      <Esc>:tabprevious<CR>
+nmap <C-k>      :tabnext<CR>
+nmap <C-j>      :tabprevious<CR>
+imap <C-k>      <Esc>:tabnext<CR>
+imap <C-j>      <Esc>:tabprevious<CR>
 nmap <C-S><C-J> <C-W><C-J>
 nmap <C-S><C-K> <C-W><C-K>
 nmap <C-S><C-L> <C-W><C-L>
