@@ -1,14 +1,13 @@
 ARG baseimage=ubuntu:18.04
 FROM $baseimage
-ARG user=karthi
-ARG pythonversion=python3.7
+ARG user=jovyan
+ARG pythonversion=python3.8 
 ARG uid=1000
 
 # to avoid cuda key err
 RUN rm -f /etc/apt/sources.list.d/cuda.list
 RUN rm -f /etc/apt/sources.list.d/nvidia-ml.list
 
-# installing basic softwares with root privilege
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	build-essential \
 	curl \
@@ -32,21 +31,27 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	sudo \
 	tmux \
 	zsh
+
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
 RUN add-apt-repository ppa:neovim-ppa/stable && \
 	apt-get install -y neovim && \
 	rm -rf /var/lib/apt/lists/*
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && \ 
 	update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8 && \
-	update-alternatives --install /usr/bin/python python /usr/bin/$pythonversion 1 && \
-	python -m pip install pip==21.0.1  && \
-	python -m pip install ipdb
+    update-alternatives --install /usr/bin/python python /usr/bin/$pythonversion 1 && \
+    python -m pip install pip==21.0.1  && \ 
+    python -m pip install ipdb
 ENV PATH="$PATH:/home/$user/.local/bin"
+ 
+# create user and set required ownership
+RUN useradd -M -s /bin/bash -N -u $uid $user \
+ && mkdir -p /home/$user \
+ && chown -R $user:users /home/$user \
+ && chown -R $user:users /usr/local/bin
 
-# add user
-RUN useradd -rm -d /home/$user -s /bin/bash -g root -G sudo -u $uid $user && \
-	echo "$user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-USER $user
+ENV HOME /home/$user
+
+USER $user 
 
 # setting up zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -63,13 +68,22 @@ COPY ./configs/pylintrc /home/$user/.pylintrc
 RUN nvim +PlugInstall +qall
 RUN python /home/$user/.vim/plugged/youcompleteme/install.py
 ENV MPLCONFIGDIR="/tmp/"
-EXPOSE 8899
 
 # setting up tmux
 RUN git clone https://github.com/tmux-plugins/tmux-yank /home/$user/.tmux/yank
 COPY ./configs/tmux.conf /home/$user/.tmux.conf
 ENV TERM=xterm-256color
 COPY ./configs/ide_start.sh .
-RUN sudo chown -R $user /home/$user
 
-CMD /bin/zsh
+# setting jupyter lab
+RUN pip install --no-cache-dir \
+markupsafe==2.0.1 \
+jupyterlab==3.4.3 \
+notebook==6.4.12 \
+ipykernel==6.15.0
+
+EXPOSE 8888
+
+ENV NB_PREFIX /
+
+CMD ["bash","-c", "jupyter lab --notebook-dir=/home/jovyan --ip=0.0.0.0 --no-browser --allow-root --port=8888 --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_origin='*' --NotebookApp.base_url=${NB_PREFIX}"]
