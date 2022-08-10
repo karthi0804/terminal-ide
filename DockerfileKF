@@ -85,5 +85,11 @@ ipykernel==6.15.0
 EXPOSE 8888
 
 ENV NB_PREFIX /
+ENV DISPLAY=""
+ENV TZ="Asia/Singapore" 
 
-CMD ["bash","-c", "jupyter lab --notebook-dir=/home/jovyan --ip=0.0.0.0 --no-browser --allow-root --port=8888 --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_origin='*' --NotebookApp.base_url=${NB_PREFIX}"]
+USER root
+RUN chown -R $user:users /home/$user
+USER $user
+
+CMD ["zsh","-c", "jupyter lab --notebook-dir=/home/jovyan --ip=0.0.0.0 --no-browser --allow-root --port=8888 --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_origin='*' --NotebookApp.base_url=${NB_PREFIX}"]

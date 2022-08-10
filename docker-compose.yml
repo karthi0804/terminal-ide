@@ -53,7 +53,7 @@ services:
       context: .
       dockerfile: DockerfileKF
       args:
-        - baseimage=nvidia/cuda:11.1-devel-ubuntu18.04 # baseimage  
+        - baseimage=nvidia/cuda:11.1.1-devel-ubuntu18.04 # baseimage  
         - pythonversion=python3.8
         - uid=1000  # uid of the host
         - user=jovyan
