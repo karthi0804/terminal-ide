@@ -86,7 +86,7 @@ EXPOSE 8888
 
 ENV NB_PREFIX /
 ENV DISPLAY=""
-ENV TZ="Asia/Singapore" 
+ENV TZ="Asia/Kolkata" 
 
 USER root
 RUN chown -R $user:users /home/$user
