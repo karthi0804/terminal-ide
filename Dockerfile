@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	g++-8 \
 	htop \
 	iputils-ping \
-    libaio-dev \
+	libaio-dev \
 	libglib2.0-0 \
 	libsm6 \	
 	libxext6 \
@@ -63,6 +63,11 @@ COPY ./configs/pylintrc /home/$user/.pylintrc
 RUN nvim +PlugInstall +qall
 RUN python /home/$user/.vim/plugged/youcompleteme/install.py
 ENV MPLCONFIGDIR="/tmp/"
+
+# setting the jupyterlab configs
+COPY ./configs/themes.jupyterlab-settings /home/$user/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/themes.jupyterlab-settings
+COPY ./configs/terminal-settings /home/$user/.jupyter/lab/user-settings/@jupyterlab/terminal-extension/plugin.jupyterlab-settings
+COPY ./configs/editor-settings /home/$user/.jupyter/lab/user-settings/@jupyterlab/fileeditor-extension/plugin.jupyterlab-settings
 EXPOSE 8899
 
 # setting up tmux
