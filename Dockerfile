@@ -64,10 +64,27 @@ RUN nvim +PlugInstall +qall
 RUN python /home/$user/.vim/plugged/youcompleteme/install.py
 ENV MPLCONFIGDIR="/tmp/"
 
+# installing github copilot dependencies
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+RUN chmod +x ~/.nvm/nvm.sh
+ENV NVM_DIR="/home/$user/.nvm" 
+RUN /bin/zsh -c "source $NVM_DIR/nvm.sh" && \
+    echo 'source $NVM_DIR/nvm.sh' >> ~/.zhrc
+ENV NODE_VERSION="17.9.1"
+RUN /bin/zsh -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm alias default $NODE_VERSION"
+ENV PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
+
+# installing github copilot
+RUN sudo git clone https://github.com/github/copilot.vim \
+   ~/.config/nvim/pack/github/start/copilot.vim
+
 # setting the jupyterlab configs
 COPY ./configs/themes.jupyterlab-settings /home/$user/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/themes.jupyterlab-settings
 COPY ./configs/terminal-settings /home/$user/.jupyter/lab/user-settings/@jupyterlab/terminal-extension/plugin.jupyterlab-settings
 COPY ./configs/editor-settings /home/$user/.jupyter/lab/user-settings/@jupyterlab/fileeditor-extension/plugin.jupyterlab-settings
+COPY ./configs/browser.jupyterlab-settings /home/$user/.jupyter/lab/user-settings/@jupyterlab/filebrowser-extension/browser.jupyterlab-settings 
+COPY ./configs/notification.jupyterlab-settings /home/$user/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/notification.jupyterlab-settings
+COPY ./configs/tracker.jupyterlab-settings /home/$user/.jupyter/lab/user-settings/@jupyterlab/notebook-extension/tracker.jupyterlab-settings
 EXPOSE 8899
 
 # setting up tmux
